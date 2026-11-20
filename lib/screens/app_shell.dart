@@ -74,7 +74,6 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       // extendBody stays false: the body ends above the bars, so the bars
       // never cover page content (the space below the body is the bars'
@@ -86,13 +85,10 @@ class _AppShellState extends State<AppShell> {
           ? null
           : AppBar(
               titleSpacing: 20,
-              title: Text(
-                'UrFunFarming',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: colors.onSurface,
-                ),
+              title: Image.asset(
+                'assets/images/logo.png',
+                height: 32,
+                semanticLabel: 'UrFunFarming',
               ),
               actions: [
                 Padding(

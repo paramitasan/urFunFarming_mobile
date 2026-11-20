@@ -44,7 +44,7 @@ void main() {
     expect(find.byType(AppShell), findsOneWidget);
     expect(find.byType(HomePage), findsOneWidget);
     expect(find.text('Good morning,'), findsOneWidget);
-    expect(find.text('UrFunFarming'), findsOneWidget);
+    expect(find.bySemanticsLabel('UrFunFarming'), findsOneWidget);
   });
 
   testWidgets('each main tab opens its page', (tester) async {
