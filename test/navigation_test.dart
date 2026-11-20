@@ -87,6 +87,29 @@ void main() {
     expect(find.text('Around the neighborhood'), findsOneWidget);
   });
 
+  for (final scale in [1.0, 1.15, 1.3, 1.5, 2.0]) {
+    testWidgets(
+        'Home has no layout errors at ${(scale * 100).round()}% font size',
+        (tester) async {
+      tester.view.physicalSize = const Size(390, 844) * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(MaterialApp(
+          theme: appTheme(),
+          builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(scale)),
+              child: child!),
+          home: AppShell(isGrower: true, marketApi: fakeMarketApi())));
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(ListView), const Offset(0, -800));
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   group('avatar menu', () {
     Future<void> openMenu(WidgetTester tester) async {
       await tester.tap(find.byType(ProfileMenuButton));

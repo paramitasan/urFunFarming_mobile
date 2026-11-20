@@ -130,13 +130,18 @@ class _TileSection extends StatelessWidget {
           const SizedBox(height: 10),
           LayoutBuilder(
             builder: (context, constraints) {
-              // Tiles keep the design's 136 px height at any screen width.
+              // Tiles keep the design's 136 px height at any screen width, and
+              // grow with the phone's font size: 72 px is padding, icon chip
+              // and gap; 64 px is two title lines and two description lines.
               final tileWidth = (constraints.maxWidth - 2 * 10) / 3;
+              final textHeight = MediaQuery.textScalerOf(context).scale(64);
+              // Scaled text lines round up a little, hence the 4 px allowance.
+              final tileHeight = textHeight > 64 ? 72 + textHeight + 4 : 136.0;
               return GridView.count(
                 crossAxisCount: 3,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: tileWidth / 136,
+                childAspectRatio: tileWidth / tileHeight,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,

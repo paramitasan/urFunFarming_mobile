@@ -37,20 +37,25 @@ class MainNavBar extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        children: [
-          for (final (i, (destination, label, icon)) in _tabs.indexed) ...[
-            if (i > 0) const SizedBox(width: 4),
-            Expanded(
-              child: _NavTab(
-                label: label,
-                icon: icon,
-                selected: destination == current,
-                onTap: () => onSelect(destination),
+      // The bar has a fixed height, so labels stop growing at 160% font size
+      // (Flutter's own NavigationBar caps its labels the same way).
+      child: MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.6,
+        child: Row(
+          children: [
+            for (final (i, (destination, label, icon)) in _tabs.indexed) ...[
+              if (i > 0) const SizedBox(width: 4),
+              Expanded(
+                child: _NavTab(
+                  label: label,
+                  icon: icon,
+                  selected: destination == current,
+                  onTap: () => onSelect(destination),
+                ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
