@@ -1,5 +1,5 @@
 name: urfunfarming_mobile
-description: "A new Flutter project."
+description: "UrFunFarming mobile app: the Flutter client of the urFunFarming community farming site."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   http: ^1.2.2
+  material_ui: ^1.11.1
 
 dev_dependencies:
   flutter_test:
