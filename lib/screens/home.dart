@@ -1,16 +1,70 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:urfunfarming_mobile/screens/app_shell.dart';
 import 'package:urfunfarming_mobile/theme.dart';
+import 'package:urfunfarming_mobile/widgets/home_tile.dart';
 
-/// The Home tab: greeting card (module tiles follow in a later stage).
+const _growingTools = [
+  HomeTileItem(
+    name: 'My gardens',
+    description: 'Beds and plants',
+    icon: 'assets/icons/tile_gardens.svg',
+    color: AppColors.gardens,
+    destination: AppDestination.gardens,
+  ),
+  HomeTileItem(
+    name: 'Plant journal',
+    description: 'Logs and photos',
+    icon: 'assets/icons/tile_journal.svg',
+    color: AppColors.journal,
+    destination: AppDestination.journal,
+  ),
+  HomeTileItem(
+    name: 'Plant care',
+    description: 'This week’s tasks',
+    icon: 'assets/icons/tile_care.svg',
+    color: AppColors.care,
+    destination: AppDestination.care,
+  ),
+];
+
+const _neighborhood = [
+  HomeTileItem(
+    name: 'Market',
+    description: 'Fresh harvests',
+    icon: 'assets/icons/tile_market.svg',
+    color: AppColors.market,
+    destination: AppDestination.market,
+  ),
+  HomeTileItem(
+    name: 'Forum',
+    description: 'Ask growers',
+    icon: 'assets/icons/tile_forum.svg',
+    color: AppColors.forum,
+    destination: AppDestination.forum,
+  ),
+  HomeTileItem(
+    name: 'Explore gardens',
+    description: 'Public gardens',
+    icon: 'assets/icons/tile_explore.svg',
+    color: AppColors.explore,
+    destination: AppDestination.explore,
+  ),
+];
+
+/// The Home tab: greeting card and tiles that open every module.
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     required this.isGrower,
+    required this.onOpen,
     this.userName = 'Muhamad Idris',
     this.today,
   });
 
   final bool isGrower;
+
+  /// Called with the tile's destination; the shell switches to it.
+  final ValueChanged<AppDestination> onOpen;
 
   // TODO: use the logged-in user's name once login exists.
   final String userName;
@@ -28,7 +82,76 @@ class HomePage extends StatelessWidget {
           meta: '${_formatDate(today ?? DateTime.now())} · '
               '${isGrower ? 'Grower and buyer' : 'Buyer'}',
         ),
+        if (isGrower)
+          _TileSection(
+            title: 'Growing tools',
+            items: _growingTools,
+            onOpen: onOpen,
+          ),
+        _TileSection(
+          title: 'Around the neighborhood',
+          items: _neighborhood,
+          onOpen: onOpen,
+        ),
       ],
+    );
+  }
+}
+
+/// A heading and a 3-column grid of tiles. The grid does not scroll by
+/// itself; the page's ListView scrolls everything.
+class _TileSection extends StatelessWidget {
+  const _TileSection({
+    required this.title,
+    required this.items,
+    required this.onOpen,
+  });
+
+  final String title;
+  final List<HomeTileItem> items;
+  final ValueChanged<AppDestination> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 17,
+              height: 22 / 17,
+              fontWeight: FontWeight.w700,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          const SizedBox(height: 10),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              // Tiles keep the design's 136 px height at any screen width.
+              final tileWidth = (constraints.maxWidth - 2 * 10) / 3;
+              return GridView.count(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: tileWidth / 136,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                children: [
+                  for (final item in items)
+                    HomeTile(
+                      item: item,
+                      onTap: () => onOpen(item.destination),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

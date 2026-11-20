@@ -36,7 +36,10 @@ class _AppShellState extends State<AppShell> {
 
   Widget _page() {
     return switch (_current) {
-      AppDestination.home => HomePage(isGrower: widget.isGrower),
+      AppDestination.home => HomePage(
+          isGrower: widget.isGrower,
+          onOpen: _select,
+        ),
       AppDestination.market => const EmptyState(title: 'Market'),
       AppDestination.forum => const ForumPage(),
       AppDestination.explore => const ExplorePage(),
