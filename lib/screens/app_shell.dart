@@ -6,6 +6,7 @@ import 'package:urfunfarming_mobile/forum/screens/forum_page.dart';
 import 'package:urfunfarming_mobile/gardens/screens/gardens_page.dart';
 import 'package:urfunfarming_mobile/journal/screens/journal_page.dart';
 import 'package:urfunfarming_mobile/widgets/empty_state.dart';
+import 'package:urfunfarming_mobile/widgets/grower_tools_bar.dart';
 import 'package:urfunfarming_mobile/widgets/main_nav_bar.dart';
 
 /// Every page the shell can show. The first four are main-bar tabs; the
@@ -48,8 +49,10 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
-      // Let pages run behind the floating bars.
-      extendBody: true,
+      // extendBody stays false: the body ends above the bars, so the bars
+      // never cover page content (the space below the body is the bars'
+      // height, which the Scaffold works out from bottomNavigationBar).
+      extendBody: false,
       appBar: AppBar(
         titleSpacing: 20,
         title: Text(
@@ -72,8 +75,17 @@ class _AppShellState extends State<AppShell> {
         top: false,
         minimum: const EdgeInsets.only(bottom: 12),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: MainNavBar(current: _current, onSelect: _select),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.isGrower) ...[
+                GrowerToolsBar(current: _current, onSelect: _select),
+                const SizedBox(height: 8),
+              ],
+              MainNavBar(current: _current, onSelect: _select),
+            ],
+          ),
         ),
       ),
     );
