@@ -21,6 +21,9 @@ class AppColors {
   static const market = Color(0xFFFBE4D4);
   static const forum = Color(0xFFE8E2F6);
   static const explore = Color(0xFFFBF0BF);
+
+  /// Top of the home greeting card gradient (fades into secondaryContainer).
+  static const greetingTop = Color(0xFFFBEFD9);
 }
 
 /// The single app theme. Screens read colours from

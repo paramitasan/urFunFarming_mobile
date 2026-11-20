@@ -5,6 +5,7 @@ import 'package:urfunfarming_mobile/explore/screens/explore_page.dart';
 import 'package:urfunfarming_mobile/forum/screens/forum_page.dart';
 import 'package:urfunfarming_mobile/gardens/screens/gardens_page.dart';
 import 'package:urfunfarming_mobile/journal/screens/journal_page.dart';
+import 'package:urfunfarming_mobile/screens/home.dart';
 import 'package:urfunfarming_mobile/widgets/empty_state.dart';
 import 'package:urfunfarming_mobile/widgets/grower_tools_bar.dart';
 import 'package:urfunfarming_mobile/widgets/main_nav_bar.dart';
@@ -35,7 +36,7 @@ class _AppShellState extends State<AppShell> {
 
   Widget _page() {
     return switch (_current) {
-      AppDestination.home => const EmptyState(title: 'Home'),
+      AppDestination.home => HomePage(isGrower: widget.isGrower),
       AppDestination.market => const EmptyState(title: 'Market'),
       AppDestination.forum => const ForumPage(),
       AppDestination.explore => const ExplorePage(),
