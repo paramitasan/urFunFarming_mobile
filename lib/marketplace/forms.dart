@@ -84,7 +84,7 @@ class Choice extends StatelessWidget {
   final ValueChanged<String> changed;
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       isExpanded: true,
       decoration: InputDecoration(labelText: label),
       items: options.entries
