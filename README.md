@@ -14,7 +14,7 @@ Faculty of Computer Science, Universitas Indonesia, Odd Semester 2026/2027
 | Repository | https://github.com/paramitasan/urFunFarming_mobile/ |
 | Deployed app (PWS) | https://paramita-santoso-urfunfarming.pws.cs.ui.ac.id/ |
 | External API | [BMKG public weather forecast API](https://data.bmkg.go.id/prakiraan-cuaca/) |
-| Figma design | https://www.figma.com/design/rDovEM0bwhNE0xkgKZhwV4/Farmerzz?node-id=0-1&t=uf8tBdtybxcNt5PB-1 |
+| Figma design | https://www.figma.com/design/rDovEM0bwhNE0xkgKZhwV4/Farmerzz?node-id=832-265 |
 | APK | (soon) |
 
 
@@ -78,7 +78,7 @@ The main bar (Home, Market, Forum, Explore) is shown to everyone. Growers also g
 
 ## Web Service & Data Integration (Flutter ↔ PWS Django REST Framework)
 
-`urfunfarming_mobile` communicates with the existing **urFunFarming** web application deployed on **PWS (Pacil Web Service)** through a RESTful JSON API built with **Django REST Framework (DRF)**. Both the web and mobile clients share the same backend database so user accounts, gardens, plant journals, plant care tasks, marketplace listings, and forum threads stay synchronized in real time.
+`urfunfarming_mobile` communicates with the existing **urFunFarming** web application deployed on **PWS (Pacil Web Service)** through a RESTful JSON API built with **Django REST Framework (DRF)**. Both the web and mobile clients share the same backend database so user accounts, gardens, plant journals, plant care tasks, marketplace listings, and forum threads stay synchronized.
 
 
 ### Architecture & Request Flow
@@ -95,14 +95,16 @@ The main bar (Home, Market, Forum, Explore) is shown to everyone. Growers also g
 
 ### Core API Endpoints Overview
 
-| Module | Endpoint Prefix | Supported Operations |
+| Module | Endpoint | Status |
 | --- | --- | --- |
-| Auth & Profiles | `/api/auth/`, `/api/profiles/` | Register, login, logout, fetch/update user profile and role flags |
-| Gardens & Plantings | `/api/gardens/`, `/api/plantings/` | List public/owned gardens, create/edit/delete gardens and plantings |
-| Plant Progress Journal | `/api/journals/` | View public entries, create/edit/delete dated growth logs and visibility |
-| Harvest Marketplace | `/api/marketplace/` | Browse available listings, create/manage harvest posts, view grower contact |
-| Care Planning & Weather | `/api/care-tasks/`, `/api/weather/` | CRUD plant care schedules and fetch BMKG weather forecasts |
-| Community Q&A Forum | `/api/forum/` | List questions, post questions/answers, upvote/downvote discussions |
+| Auth & Profiles | POST /api/auth/register/, POST /api/auth/login/, POST /api/auth/logout/, GET /api/auth/me/ | Available |
+| Community Q&A Forum | GET /api/forum/ (list, public), GET /api/forum/<id>/ (detail with answers, login required) | Available, read-only; posting and voting planned |
+| Harvest Marketplace | GET/POST /api/marketplace/listings/, GET/PATCH/PUT/DELETE /api/marketplace/listings/<id>/, GET /api/marketplace/mine/, GET /api/marketplace/listings/<id>/pickup-weather/ | Available |
+| Gardens & Plantings | /api/gardens/ | Planned |
+| Plant Progress Journal | /api/journal/ | Planned |
+| Care Planning & Weather | /api/care/ | Planned |
+
+Planned endpoints will follow the same token authentication and permission rules.
 
 
 
