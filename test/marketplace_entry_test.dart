@@ -1,18 +1,19 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:urfunfarming_mobile/main.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:urfunfarming_mobile/marketplace/market_api.dart';
-import 'package:urfunfarming_mobile/marketplace/marketplace_button.dart';
+import 'package:urfunfarming_mobile/marketplace/market_screen.dart';
+import 'package:urfunfarming_mobile/screens/app_shell.dart';
+import 'package:urfunfarming_mobile/theme.dart';
+import 'package:urfunfarming_mobile/widgets/grower_tools_bar.dart';
+import 'package:urfunfarming_mobile/widgets/main_nav_bar.dart';
 
 void main() {
   testWidgets(
-      'the team home includes the marketplace, and its entry loads the catalog and returns',
-      (tester) async {
-    await tester.pumpWidget(const MyApp());
-    expect(find.byType(MarketplaceButton), findsOneWidget);
+      'the Market tab opens the marketplace with one app bar, above the bars, '
+      'and Home leaves it', (tester) async {
     final paths = <String>[];
     final api =
         MarketApi(Uri.parse('https://example.test'), MockClient((r) async {
@@ -21,15 +22,24 @@ void main() {
           jsonEncode({'count': 0, 'page': 1, 'pages': 1, 'results': []}), 200,
           headers: {'content-type': 'application/json'});
     }));
-    await tester.pumpWidget(
-        MaterialApp(home: Scaffold(body: MarketplaceButton(api: api))));
-    await tester.tap(find.text('Harvest Marketplace'));
+    await tester.pumpWidget(MaterialApp(
+        theme: appTheme(), home: AppShell(isGrower: true, marketApi: api)));
+    Finder tab(String label) => find.descendant(
+        of: find.byType(MainNavBar), matching: find.text(label));
+
+    await tester.tap(tab('Market'));
     await tester.pumpAndSettle();
+    expect(find.byType(MarketScreen), findsOneWidget);
     expect(find.text('Search harvests'), findsOneWidget);
     expect(paths, ['/api/marketplace/listings/']);
-    await tester.pageBack();
+    expect(find.byType(AppBar), findsOneWidget);
+    expect(tester.getBottomLeft(find.byType(MarketScreen)).dy,
+        lessThanOrEqualTo(tester.getTopLeft(find.byType(GrowerToolsBar)).dy));
+
+    await tester.tap(tab('Home'));
     await tester.pumpAndSettle();
-    expect(find.byType(MarketplaceButton), findsOneWidget);
-    expect(find.text('Search harvests'), findsNothing);
+    expect(find.byType(MarketScreen), findsNothing);
+    expect(find.text('Good morning,'), findsOneWidget);
+    expect(find.byType(AppBar), findsOneWidget);
   });
 }

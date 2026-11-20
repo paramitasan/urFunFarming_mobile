@@ -91,8 +91,11 @@ class MarketApi {
     }
     final status = response.statusCode;
     if (status == 204) return {};
-    if (status == 401 && token != null && token == session?.token) {
-      session = null;
+    if (status == 401 && token != null) {
+      // The saved token expired: forget it and send the same request once
+      // more without it (auth: false, so this cannot loop).
+      if (token == session?.token) session = null;
+      return _call(method, path, query: query, body: body, auth: false);
     }
     Object? decoded;
     try {

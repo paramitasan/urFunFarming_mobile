@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'market_api.dart';
 
 class SignInPage extends StatefulWidget {
@@ -84,7 +84,7 @@ class Choice extends StatelessWidget {
   final ValueChanged<String> changed;
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       isExpanded: true,
       decoration: InputDecoration(labelText: label),
       items: options.entries
