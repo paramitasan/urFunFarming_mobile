@@ -11,6 +11,10 @@ import 'package:urfunfarming_mobile/marketplace/market_screen.dart';
 import 'package:urfunfarming_mobile/screens/home.dart';
 import 'package:urfunfarming_mobile/widgets/grower_tools_bar.dart';
 import 'package:urfunfarming_mobile/widgets/main_nav_bar.dart';
+import 'package:urfunfarming_mobile/widgets/profile_menu.dart';
+
+// TODO: replace with the logged-in user once login exists.
+const sampleUserName = 'Muhamad Idris';
 
 /// Every page the shell can show. The first four are main-bar tabs; the
 /// last three are grower tools.
@@ -57,6 +61,7 @@ class _AppShellState extends State<AppShell> {
       AppDestination.home => HomePage(
           isGrower: widget.isGrower,
           onOpen: _select,
+          userName: sampleUserName,
         ),
       AppDestination.market => MarketScreen(api: _marketApi),
       AppDestination.forum => const ForumPage(),
@@ -89,10 +94,13 @@ class _AppShellState extends State<AppShell> {
                   color: colors.onSurface,
                 ),
               ),
-              actions: const [
+              actions: [
                 Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: _Avatar(initials: 'MI'),
+                  padding: const EdgeInsets.only(right: 20),
+                  child: ProfileMenuButton(
+                    userName: sampleUserName,
+                    roles: widget.isGrower ? 'Grower and buyer' : 'Buyer',
+                  ),
                 ),
               ],
             ),
@@ -112,30 +120,6 @@ class _AppShellState extends State<AppShell> {
               MainNavBar(current: _current, onSelect: _select),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Round avatar with the user's initials. Does nothing yet.
-class _Avatar extends StatelessWidget {
-  const _Avatar({required this.initials});
-
-  final String initials;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    return CircleAvatar(
-      radius: 20,
-      backgroundColor: colors.primary,
-      child: Text(
-        initials,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: colors.onSurface,
         ),
       ),
     );
