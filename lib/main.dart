@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:urfunfarming_mobile/marketplace/marketplace_button.dart';
+import 'package:urfunfarming_mobile/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'UrFunFarming',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: appTheme(),
       // Blank placeholder until the app shell exists. The marketplace entry
       // stays here so the teammate's module remains reachable; Stage 9
       // replaces it with the Market tab.
