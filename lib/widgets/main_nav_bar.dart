@@ -1,3 +1,5 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:urfunfarming_mobile/screens/app_shell.dart';
 import 'package:urfunfarming_mobile/widgets/svg_icon.dart';
@@ -31,7 +33,7 @@ class MainNavBar extends StatelessWidget {
         border: Border.all(color: colors.outlineVariant),
         boxShadow: [
           BoxShadow(
-            color: colors.onSurface.withValues(alpha: 0.16),
+            color: colors.onSurface.withAlpha(41), // 16% opacity
             offset: const Offset(0, 8),
             blurRadius: 12,
           ),

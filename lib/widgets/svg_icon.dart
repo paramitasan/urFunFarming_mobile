@@ -1,4 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 
 /// One of the Figma icons in assets/icons/, tinted with [color].

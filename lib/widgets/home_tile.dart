@@ -1,3 +1,5 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:urfunfarming_mobile/screens/app_shell.dart';
 import 'package:urfunfarming_mobile/widgets/svg_icon.dart';

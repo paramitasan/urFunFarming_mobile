@@ -1,3 +1,5 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 
 // Brand colours from the Figma file (Farmerzz, core/* variables).
@@ -24,6 +26,39 @@ class AppColors {
 
   /// Top of the home greeting card gradient (fades into secondaryContainer).
   static const greetingTop = Color(0xFFFBEFD9);
+}
+
+/// Card look for the app (white surface, 16 px corners, thin border).
+///
+/// This replaces `ThemeData.cardTheme`: Flutter 3.24.5 only has `CardTheme`,
+/// while newer Flutter's `cardTheme` only accepts `CardThemeData`, so no
+/// spelling of `cardTheme` compiles on both. Cards read this extension with
+/// `Theme.of(context).extension<AppCardStyle>()` instead.
+@immutable
+class AppCardStyle extends ThemeExtension<AppCardStyle> {
+  const AppCardStyle({
+    this.color = _surface,
+    this.shape = const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+      side: BorderSide(color: _border),
+    ),
+  });
+
+  final Color color;
+  final ShapeBorder shape;
+
+  @override
+  AppCardStyle copyWith({Color? color, ShapeBorder? shape}) =>
+      AppCardStyle(color: color ?? this.color, shape: shape ?? this.shape);
+
+  @override
+  AppCardStyle lerp(AppCardStyle? other, double t) {
+    if (other == null) return this;
+    return AppCardStyle(
+      color: Color.lerp(color, other.color, t) ?? color,
+      shape: ShapeBorder.lerp(shape, other.shape, t) ?? shape,
+    );
+  }
 }
 
 /// The single app theme. Screens read colours from
@@ -66,15 +101,7 @@ ThemeData appTheme() {
       elevation: 0,
       scrolledUnderElevation: 0,
     ),
-    cardTheme: const CardThemeData(
-      color: _surface,
-      surfaceTintColor: Colors.transparent,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        side: BorderSide(color: _border),
-      ),
-    ),
+    extensions: const [AppCardStyle()],
     snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
   );
 }

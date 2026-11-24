@@ -1,3 +1,5 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'market_api.dart';
 
@@ -84,7 +86,11 @@ class Choice extends StatelessWidget {
   final ValueChanged<String> changed;
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<String>(
-      initialValue: value,
+      // `value` is deprecated on newer Flutter in favour of `initialValue`,
+      // but `initialValue` does not exist on Flutter 3.24.5. Both pass the
+      // value to FormField.initialValue, so the behaviour is the same.
+      // ignore: deprecated_member_use
+      value: value,
       isExpanded: true,
       decoration: InputDecoration(labelText: label),
       items: options.entries

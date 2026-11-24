@@ -1,3 +1,5 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:urfunfarming_mobile/auth/screens/profile_page.dart';
 import 'package:urfunfarming_mobile/widgets/svg_icon.dart';
@@ -41,7 +43,7 @@ class ProfileMenuButton extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Close profile menu',
-      barrierColor: colors.onSurface.withValues(alpha: 0.28),
+      barrierColor: colors.onSurface.withAlpha(71), // 28% opacity
       transitionDuration: const Duration(milliseconds: 150),
       transitionBuilder: (context, animation, _, child) =>
           FadeTransition(opacity: animation, child: child),
@@ -159,7 +161,7 @@ class _MenuCard extends StatelessWidget {
         border: Border.all(color: colors.outlineVariant),
         boxShadow: [
           BoxShadow(
-            color: colors.onSurface.withValues(alpha: 0.22),
+            color: colors.onSurface.withAlpha(56), // 22% opacity
             offset: const Offset(0, 12),
             blurRadius: 32,
           ),

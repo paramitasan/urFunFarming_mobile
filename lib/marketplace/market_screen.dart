@@ -1,7 +1,10 @@
+// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'market_api.dart';
 import 'forms.dart';
 import 'listing_detail.dart';
+import 'package:urfunfarming_mobile/theme.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key, required this.api, this.drawer});
@@ -328,8 +331,15 @@ class HarvestCard extends StatelessWidget {
         : c == 'herbs'
             ? const Color(0xffdce9cc)
             : const Color(0xffedeacb);
+    // The app's card look (see AppCardStyle in theme.dart). It is null in
+    // the standalone preview (main_marketplace.dart, harvestTheme), which
+    // never had a card theme, so the card keeps Flutter's default look there.
+    final style = Theme.of(context).extension<AppCardStyle>();
     return Card(
         color: Colors.white,
+        elevation: style == null ? null : 0,
+        surfaceTintColor: style == null ? null : Colors.transparent,
+        shape: style?.shape,
         margin: const EdgeInsets.only(bottom: 10),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
