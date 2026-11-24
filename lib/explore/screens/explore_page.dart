@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:urfunfarming_mobile/widgets/empty_state.dart';
 
 /// Explore gardens page, shown inside the app shell.

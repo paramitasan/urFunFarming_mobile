@@ -41,3 +41,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Teammates use different Flutter versions, so each machine resolves its own
+# packages; a shared lockfile from a newer Flutter breaks `flutter pub get`.
+pubspec.lock

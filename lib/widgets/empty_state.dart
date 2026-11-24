@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 
 /// Placeholder content for a page whose feature is not built yet.
 class EmptyState extends StatelessWidget {

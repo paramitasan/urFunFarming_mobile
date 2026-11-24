@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 
 // Brand colours from the Figma file (Farmerzz, core/* variables).
 const _background = Color(0xFFE6F0DC); // core/bg
