@@ -143,7 +143,7 @@ Planned endpoints will follow the same token authentication and permission rules
 
 ## How to Run
 
-You need Flutter 3.50 or newer.
+You need Flutter 3.24.5 or newer.
 
 ```bash
 flutter pub get
@@ -160,13 +160,23 @@ To try the app in Chrome, use `tool/demo_marketplace.sh` instead of `flutter run
 
 Run the tests with `flutter test`.
 
+### Team rules (keep the app building on Flutter 3.24.5)
+
+- Import `package:flutter/material.dart`, not `material_ui`. Put these two lines above the import in every new file:
+  `// Kept for Flutter 3.24.5 support. Switch to material_ui when everyone is on 3.47+.` and
+  `// ignore: deprecated_member_use`.
+- Use `withAlpha(...)` instead of `withValues(alpha: ...)`.
+- Don't use `spacing:` on `Row` or `Column`; use `SizedBox` gaps.
+- Style cards with `AppCardStyle` (in `lib/theme.dart`), not `cardTheme`.
+- Use `value:` instead of `initialValue:` on `DropdownButtonFormField`.
+- Don't commit `pubspec.lock`.
+
 
 
 ## Packages
 
 - `http`: calls the Django REST API.
 - `flutter_svg`: draws the icons exported from our Figma design.
-- `material_ui`: Flutter's Material library, a separate package from Flutter 3.50 on.
 
 
 
